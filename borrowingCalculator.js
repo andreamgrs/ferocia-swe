@@ -146,8 +146,28 @@ function runConsoleMode() {
         return;
       }
       rl.question('Declared Monthly Expenses: $', (expenses) => {
+        //adding an if validation before calling the API
+        const validExpenses = parseFloat(expenses);
+        //calling isNaN function to return true or false
+        if (isNaN(validExpenses) || validExpenses <= 0) {
+          console.error(
+            'Error: the Monthly Expenses needs to be greater than 0.',
+          );
+          rl.close();
+          return;
+        }
         //Make the callbank async too and adding try/ctach to handle the promise rejection
         rl.question('Total Credit Card Limits: $', async (creditLimits) => {
+          //adding an if validation before calling the API
+          const validCreditLimits = parseFloat(creditLimits);
+          //calling isNaN function to return true or false
+          if (isNaN(validCreditLimits) || validCreditLimits < 0) {
+            console.error(
+              'Error: the Credit Card Limits needs to be 0 or greater than 0.',
+            );
+            rl.close();
+            return;
+          }
           try {
             // Banks assess loans using base rate + buffer for safety
             const assessmentRate = INTEREST_RATE + ASSESSMENT_RATE_BUFFER;
@@ -156,8 +176,8 @@ function runConsoleMode() {
               //I change it to call the variables
               validIncome,
               validDependents,
-              parseFloat(expenses),
-              parseFloat(creditLimits),
+              validExpenses,
+              validCreditLimits,
               assessmentRate,
             );
 
