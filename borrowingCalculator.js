@@ -135,6 +135,16 @@ function runConsoleMode() {
       return;
     }
     rl.question('Number of Dependents: ', (dependents) => {
+      //adding an if validation before calling the API
+      const validDependents = parseInt(dependents);
+      //calling isNaN function to return true or false
+      if (isNaN(validDependents) || validDependents < 0) {
+        console.error(
+          'Error: the number of dependents needs to be 0 or greater than 0.',
+        );
+        rl.close();
+        return;
+      }
       rl.question('Declared Monthly Expenses: $', (expenses) => {
         //Make the callbank async too and adding try/ctach to handle the promise rejection
         rl.question('Total Credit Card Limits: $', async (creditLimits) => {
@@ -143,8 +153,9 @@ function runConsoleMode() {
             const assessmentRate = INTEREST_RATE + ASSESSMENT_RATE_BUFFER;
 
             const result = await calculateBorrowingPower(
+              //I change it to call the variables
               validIncome,
-              parseInt(dependents),
+              validDependents,
               parseFloat(expenses),
               parseFloat(creditLimits),
               assessmentRate,
