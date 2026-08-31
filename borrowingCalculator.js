@@ -126,6 +126,14 @@ function runConsoleMode() {
   console.log('===================================');
 
   rl.question('Gross Annual Income: $', (income) => {
+    //adding an if validation before calling the API
+    const validIncome = parseFloat(income);
+    //calling isNaN function to return true or false
+    if (isNaN(validIncome) || validIncome <= 0) {
+      console.error('Error: Please add a Gross Annual Income greater than 0.');
+      rl.close();
+      return;
+    }
     rl.question('Number of Dependents: ', (dependents) => {
       rl.question('Declared Monthly Expenses: $', (expenses) => {
         //Make the callbank async too and adding try/ctach to handle the promise rejection
@@ -135,7 +143,7 @@ function runConsoleMode() {
             const assessmentRate = INTEREST_RATE + ASSESSMENT_RATE_BUFFER;
 
             const result = await calculateBorrowingPower(
-              parseFloat(income),
+              validIncome,
               parseInt(dependents),
               parseFloat(expenses),
               parseFloat(creditLimits),
