@@ -58,7 +58,7 @@ class CalculatorFunctions {
     }
   }
 
-  //Adding the principal methos with this.getTax and this.getHem
+  //Adding the principal method with this.getTax and this.getHem
   async calculateBorrowingPower(
     income,
     dependents,
