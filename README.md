@@ -75,3 +75,28 @@ Run tests with:
 ```
 npm test
 ```
+
+## How My Brain Works
+
+Here's a walkthrough of my thought process while working through this challenge, step by step.
+
+**1. Understand the problem first**
+Before writing any code, I read through `README.md` and `server.md` to understand what already existed, what was missing, and what the API endpoints expected (URL params, headers, response shape).
+
+**2. Set up a comfortable environment for testing the API**
+I ran an Ubuntu container attached to VS Code so I could use `curl` to test the API endpoints directly before touching any JavaScript. This let me confirm what `server.js` actually returned (and what headers it required) without guessing.
+
+**3. Identify the disconnect**
+`server.js` and `borrowingCalculator.js` weren't talking to each other. `getTax` and `getHEM` were still placeholder functions with hardcoded logic. My first real task was to connect them: replace the placeholders with real `fetch` calls to the endpoints, so the calculator would be powered by live data instead of guesses.
+
+**4. Add the API calls, then handle what broke**
+After wiring up the `fetch` calls, I tested the CLI end-to-end and found that leaving inputs blank sent invalid values (`NaN`) straight to the API, causing 400 errors. I added input validation at each `rl.question` step, so if the input isn't a valid number, the user sees a clear error message and the CLI closes instead of crashing or silently producing wrong numbers.
+
+**5. Make it manageable: refactor into a class**
+I moved `getTax`, `getHEM`, and `calculateBorrowingPower` into a `CalculatorFunctions` class. I deliberately designed the constructor to receive configuration (token, loan term, interest rate, assessment buffer) as parameters rather than hardcoding them inside the class. The CLI decides _what_ values to use, and the class only knows _how_ to use them.
+
+**6. Update the tests to match the new structure**
+Once the logic lived inside a class, I refactored `test_calculator.js` to create an instance of `CalculatorFunctions` per test and mock out `getTax`/`getHEM` with fixed return values. This way the tests don't depend on the real API server running, and always produce predictable, repeatable results. I also added two more tests to make sure the API calls throw an error correctly when they fail.
+
+**7. Done!**
+Thanks so much for taking the time to read through how I think and for the exercise!!

@@ -44,4 +44,40 @@ describe('Calculator Tests', () => {
     assert.strictEqual(result.maxLoanAmount, 0);
     assert.strictEqual(result.monthlyRepayment, 0);
   });
+
+  it('should throw an error when the Tax API call fails', async () => {
+    const calculate = new CalculatorFunctions('fakeToken', 33000, 7, 3);
+
+    // mocking getTax to simulate an API failure
+    calculate.getTax = async () => {
+      throw new Error('Error on Tax API: 400');
+    };
+    calculate.getHEM = async () => 2800;
+
+    //Im waiting this return an error
+    await assert.rejects(
+      calculate.calculateBorrowingPower(30000, 3, 4000, 5000, 7.5),
+      {
+        message: 'Error on Tax API: 400',
+      },
+    );
+  });
+
+  it('should throw an error when the HEM API call fails', async () => {
+    const calculate = new CalculatorFunctions('fakeToken', 33000, 7, 3);
+
+    // mocking getHEM to simulate an API failure
+    calculate.getHEM = async () => {
+      throw new Error('Error on Tax API: 400');
+    };
+    calculate.getTax = async () => 2800;
+
+    //Im waiting this return an error
+    await assert.rejects(
+      calculate.calculateBorrowingPower(30000, 3, 4000, 5000, 7.5),
+      {
+        message: 'Error on Tax API: 400',
+      },
+    );
+  });
 });
