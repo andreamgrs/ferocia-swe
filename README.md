@@ -98,5 +98,10 @@ I moved `getTax`, `getHEM`, and `calculateBorrowingPower` into a `CalculatorFunc
 **6. Update the tests to match the new structure**
 Once the logic lived inside a class, I refactored `test_calculator.js` to create an instance of `CalculatorFunctions` per test and mock out `getTax`/`getHEM` with fixed return values. This way the tests don't depend on the real API server running, and always produce predictable, repeatable results. I also added two more tests to make sure the API calls throw an error correctly when they fail.
 
-**7. Done!**
-Thanks so much for taking the time to read through how I think and for the exercise!!
+**7. Sketching it out on paper**
+I really like to sketch things out on paper, it helps me structure my ideas and see the flow of the problem. Here's a photo of my notes from this exercise sorry for the mix between spanish and english haha:
+
+![Handwritten notes sketching out the calculator logic](public/ferocia.jpeg)
+
+**8. Done!**
+Thanks so much for taking the time to read through how I think and for the exercise itself!
