@@ -101,7 +101,9 @@ Once the logic lived inside a class, I refactored `test_calculator.js` to create
 **7. Sketching it out on paper**
 I really like to sketch things out on paper, it helps me structure my ideas and see the flow of the problem. Here's a photo of my notes from this exercise sorry for the mix between spanish and english haha:
 
-![Handwritten notes sketching out the calculator logic](public/ferocia.jpeg)
+<p align="center">
+  <img src="docs/notes.jpg" alt="Handwritten notes sketching out the calculator logic" width="400">
+</p>
 
 **8. Done!**
 Thanks so much for taking the time to read through how I think and for the exercise itself!
